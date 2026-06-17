@@ -25,11 +25,14 @@ A rotina foi desenhada para manter a etapa metodológica auditável. Antes de fe
 │   ├── raw/          # arquivos brutos baixados do Siconfi
 │   ├── interim/      # tabelas intermediárias e diagnósticos
 │   └── processed/    # bases tratadas
+├── docs/
+│   └── index.html    # página HTML com o resumo do cálculo
 ├── outputs/          # tabela final em CSV e XLSX
 ├── scripts/
 │   ├── 01_baixar_rreo.py
 │   ├── 02_diagnosticar_linhas.py
-│   └── 03_calcular_cpt_es.py
+│   ├── 03_calcular_cpt_es.py
+│   └── 04_gerar_html.py
 └── src/
     └── siconfi_ibs/
 ```
@@ -46,6 +49,7 @@ pip install -r requirements.txt
 python scripts/01_baixar_rreo.py
 python scripts/02_diagnosticar_linhas.py
 python scripts/03_calcular_cpt_es.py
+python scripts/04_gerar_html.py
 ```
 
 Os principais resultados ficam em:
@@ -54,6 +58,19 @@ Os principais resultados ficam em:
 outputs/tabela_cpt_es.csv
 outputs/tabela_cpt_es.xlsx
 outputs/resumo_cpt_es.txt
+docs/index.html
+```
+
+## Página HTML
+
+O arquivo `docs/index.html` apresenta um resumo visual com CPT, CPA, diferença em pontos percentuais, ano-base e tabela anual de cálculo.
+
+Para publicar no GitHub Pages, use a configuração do repositório: **Settings > Pages > Build and deployment > Deploy from a branch**, selecionando a branch `main` e a pasta `/docs`.
+
+Depois disso, a página deve ficar disponível em:
+
+```text
+https://eduardoaraujoox.github.io/IBS/
 ```
 
 ## Observação metodológica importante
@@ -68,4 +85,4 @@ Essa tabela deve ser conferida antes de usar o número final em documento instit
 
 ## Execução pelo GitHub Actions
 
-O workflow `Atualizar tabela CPT ES` pode ser disparado manualmente na aba **Actions** do GitHub. Ele baixa os dados, calcula a tabela e disponibiliza os arquivos finais como artefatos da execução.
+O workflow `Atualizar tabela CPT ES` pode ser disparado manualmente na aba **Actions** do GitHub. Ele baixa os dados, calcula a tabela, gera `docs/index.html`, atualiza a página no repositório e disponibiliza os arquivos finais como artefatos da execução.
