@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Dados gerados
+/data/raw/*
+/data/interim/*
+/data/processed/*
+/outputs/*
+
+# Mantem diretorios versionados
+!/data/raw/.gitkeep
+!/data/interim/.gitkeep
+!/data/processed/.gitkeep
+!/outputs/.gitkeep
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
