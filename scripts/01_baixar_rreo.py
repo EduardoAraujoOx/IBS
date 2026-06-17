@@ -4,7 +4,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from siconfi_ibs.core import download_rreo, load_params
+from siconfi_ibs.safe import download_rreo, load_params
 
 
 def main() -> None:
