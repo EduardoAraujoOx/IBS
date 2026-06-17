@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import shutil
 from datetime import datetime
 from html import escape
 from pathlib import Path
@@ -20,6 +21,25 @@ def fmt_percent(value: float, decimals: int = 4) -> str:
     if pd.isna(value):
         return "-"
     return fmt_number(value * 100, decimals) + "%"
+
+
+def copy_assets() -> None:
+    assets = ROOT / "docs" / "assets"
+    assets.mkdir(parents=True, exist_ok=True)
+
+    files = [
+        (ROOT / "outputs" / "tabela_cpt_es.csv", assets / "tabela_cpt_es.csv"),
+        (ROOT / "outputs" / "tabela_cpt_es.xlsx", assets / "tabela_cpt_es.xlsx"),
+        (ROOT / "outputs" / "resumo_cpt_es.txt", assets / "resumo_cpt_es.txt"),
+        (
+            ROOT / "data" / "interim" / "linhas_candidatas_icms_iss_fundeb.csv",
+            assets / "linhas_candidatas_icms_iss_fundeb.csv",
+        ),
+    ]
+
+    for src, dst in files:
+        if src.exists():
+            shutil.copy2(src, dst)
 
 
 def make_html() -> str:
@@ -48,6 +68,8 @@ def make_html() -> str:
 </body>
 </html>
 """
+
+    copy_assets()
 
     table = pd.read_csv(csv_path)
     table = table.sort_values("Ano")
@@ -177,9 +199,10 @@ def make_html() -> str:
       <p>A RBR é tratada como a soma de ICMS estadual e ISS municipal. O deflator de cada ano é calculado como RBR do ano-base dividido pela RBR do ano. A RPC do Espírito Santo corresponde ao ICMS do ES corrigido por esse deflator.</p>
       <p class="note">A página resume o cálculo automático. Antes de uso institucional, conferir a tabela de diagnóstico de linhas candidatas para validar o tratamento de ICMS líquido, cota-parte municipal, Fundeb e eventuais deduções.</p>
       <p class="links">
-        <a href="../outputs/tabela_cpt_es.csv">CSV</a>
-        <a href="../outputs/tabela_cpt_es.xlsx">XLSX</a>
-        <a href="../outputs/resumo_cpt_es.txt">Resumo TXT</a>
+        <a href="assets/tabela_cpt_es.csv">CSV</a>
+        <a href="assets/tabela_cpt_es.xlsx">XLSX</a>
+        <a href="assets/resumo_cpt_es.txt">Resumo TXT</a>
+        <a href="assets/linhas_candidatas_icms_iss_fundeb.csv">Diagnóstico das linhas</a>
       </p>
     </section>
   </main>
