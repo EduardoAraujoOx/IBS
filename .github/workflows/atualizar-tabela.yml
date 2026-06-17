@@ -15,12 +15,18 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: cpt-es-update-main
+  cancel-in-progress: true
+
 jobs:
   atualizar:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configurar Python
         uses: actions/setup-python@v5
@@ -46,9 +52,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main
           git add docs
           git commit -m "Update CPT ES HTML page" || echo "Sem alteracoes na pagina"
-          git push
+          git push origin HEAD:main
 
       - name: Publicar artefatos
         uses: actions/upload-artifact@v4
