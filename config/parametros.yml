@@ -1,0 +1,41 @@
+anos:
+  inicial: 2019
+  final: 2025
+
+siconfi:
+  endpoint_rreo: https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rreo
+  tipo_demonstrativo: RREO
+  anexo: RREO-Anexo 03
+  periodo: 6
+
+espirito_santo:
+  uf: ES
+  id_ente_estado: 32
+
+extracao:
+  coluna_valor_preferida_regex:
+    - ate o bimestre
+    - até o bimestre
+    - total
+    - receitas realizadas
+  icms_regex:
+    - ICMS
+    - Imposto sobre Operações Relativas à Circulação de Mercadorias
+  iss_regex:
+    - ISS
+    - Imposto sobre Serviços
+  excluir_regex:
+    - dedução
+    - fundeb
+    - transferência
+    - cota-parte
+  diagnostico_regex:
+    - ICMS
+    - ISS
+    - FUNDEB
+    - cota
+    - transfer
+    - dedu
+
+calculo:
+  cenario: base_auto_bruta
