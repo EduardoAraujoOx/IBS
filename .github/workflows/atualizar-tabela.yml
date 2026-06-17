@@ -1,0 +1,36 @@
+name: Atualizar tabela CPT ES
+
+on:
+  workflow_dispatch:
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Baixar dados do RREO/Siconfi
+        run: python scripts/01_baixar_rreo.py
+
+      - name: Gerar diagnostico de linhas
+        run: python scripts/02_diagnosticar_linhas.py
+
+      - name: Calcular CPT/CPA do ES
+        run: python scripts/03_calcular_cpt_es.py
+
+      - name: Publicar artefatos
+        uses: actions/upload-artifact@v4
+        with:
+          name: tabela-cpt-es
+          path: |
+            outputs/*
+            data/interim/linhas_candidatas_icms_iss_fundeb.csv
