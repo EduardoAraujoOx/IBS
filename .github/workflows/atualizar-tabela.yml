@@ -3,6 +3,9 @@ name: Atualizar tabela CPT ES
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   atualizar:
     runs-on: ubuntu-latest
@@ -27,10 +30,22 @@ jobs:
       - name: Calcular CPT/CPA do ES
         run: python scripts/03_calcular_cpt_es.py
 
+      - name: Gerar pagina HTML
+        run: python scripts/04_gerar_html.py
+
+      - name: Atualizar pagina no repositorio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html
+          git commit -m "Update CPT ES HTML page" || echo "Sem alteracoes na pagina"
+          git push
+
       - name: Publicar artefatos
         uses: actions/upload-artifact@v4
         with:
           name: tabela-cpt-es
           path: |
             outputs/*
+            docs/index.html
             data/interim/linhas_candidatas_icms_iss_fundeb.csv
