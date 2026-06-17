@@ -2,22 +2,9 @@ name: Atualizar tabela CPT ES
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'scripts/**'
-      - 'src/**'
-      - 'config/**'
-      - 'requirements.txt'
-      - '.github/workflows/atualizar-tabela.yml'
 
 permissions:
   contents: write
-
-concurrency:
-  group: cpt-es-update-main
-  cancel-in-progress: true
 
 jobs:
   atualizar:
@@ -49,6 +36,7 @@ jobs:
         run: python scripts/04_gerar_html.py
 
       - name: Atualizar pagina no repositorio
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -58,6 +46,7 @@ jobs:
           git push origin HEAD:main
 
       - name: Publicar artefatos
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: tabela-cpt-es
