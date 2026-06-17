@@ -4,7 +4,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from siconfi_ibs.core import load_params, make_diagnostic_table, read_raw
+from siconfi_ibs.safe import load_params, make_diagnostic_table, read_raw
 
 
 def main() -> None:
