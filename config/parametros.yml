@@ -5,7 +5,8 @@ anos:
 siconfi:
   endpoint_rreo: https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rreo
   tipo_demonstrativo: RREO
-  anexo: RREO-Anexo 03
+  # Estimativa preliminar 2019-2025: ICMS e ISS devem ser buscados no Balanço Orçamentário.
+  anexo: RREO-Anexo 01
   periodo: 6
 
 espirito_santo:
@@ -14,28 +15,41 @@ espirito_santo:
 
 extracao:
   coluna_valor_preferida_regex:
+    - receitas realizadas ate o bimestre
+    - receitas realizadas até o bimestre
     - ate o bimestre
     - até o bimestre
+    - realizado
     - total
-    - receitas realizadas
   icms_regex:
     - ICMS
     - Imposto sobre Operações Relativas à Circulação de Mercadorias
+    - Imposto sobre Operacoes Relativas a Circulacao de Mercadorias
   iss_regex:
     - ISS
     - Imposto sobre Serviços
+    - Imposto sobre Servicos
   excluir_regex:
     - dedução
+    - deducao
     - fundeb
     - transferência
+    - transferencia
     - cota-parte
+    - cota parte
   diagnostico_regex:
     - ICMS
     - ISS
+    - Imposto sobre Serviços
+    - Imposto sobre Servicos
+    - Imposto sobre Operações Relativas
+    - Imposto sobre Operacoes Relativas
     - FUNDEB
     - cota
     - transfer
     - dedu
 
 calculo:
-  cenario: base_auto_bruta
+  cenario: preliminar_2019_2025
+  base_ano: 2025
+  icms_es_liquido_fator: 0.75
